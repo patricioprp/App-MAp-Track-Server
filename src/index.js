@@ -1,8 +1,21 @@
+require('./models/User');
+
 const express = require('express'); //creamos una app de express
 
 const mongoose = require('mongoose');//para poder conectarnos remotamente con mongo cloud
 
+const bodyParser = require('body-parser');
+
+const authRoutes = require('./routes/authRoutes');
+
+const requireAuth = require('./middlewares/requireAuth');
+
 const app = express();// creamos un objeto de express
+
+app.use(bodyParser.json());
+
+//asociaremos todos los manejadores de rutas con nuesta app principal
+app.use(authRoutes);
 
 const mongoURI = 'mongodb+srv://admin:admin@cluster0.9gb3l.mongodb.net/<dbname>?retryWrites=true&w=majority'
 
@@ -19,9 +32,9 @@ mongoose.connection.on('connected',() => {
 mongoose.connection.on('error',(err) => {
     console.error('Error al conectar con mongo db',err);
 });
-
-app.get('/',(req,res) => {
-    res.send('Hola !');
+//agregamos el middleware requireAuth
+app.get('/',requireAuth,(req,res) => {
+    res.send(`Your email: ${req.user.email}`);
 });
 
 //Definimos el puerto por el cual se escuchara la app
