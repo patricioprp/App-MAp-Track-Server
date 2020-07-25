@@ -1,10 +1,12 @@
-require('./models/User');
-
+require('./models/User');//hay que cargar todos los modelos en el index
+require('./models/Track');//hay que cargar todos los modelos en el index
 const express = require('express'); //creamos una app de express
 
 const mongoose = require('mongoose');//para poder conectarnos remotamente con mongo cloud
 
 const bodyParser = require('body-parser');
+
+const trackRoutes = require('./routes/trackRoutes');
 
 const authRoutes = require('./routes/authRoutes');
 
@@ -16,6 +18,8 @@ app.use(bodyParser.json());
 
 //asociaremos todos los manejadores de rutas con nuesta app principal
 app.use(authRoutes);
+
+app.use(trackRoutes);
 
 const mongoURI = 'mongodb+srv://admin:admin@cluster0.9gb3l.mongodb.net/<dbname>?retryWrites=true&w=majority'
 
