@@ -16,7 +16,7 @@ module.exports = (req,res,next) => {
         if(err){
             return res.status(401).send({error:'Usted deberia haber iniciado sesion'});  
         }
-        console.log(payload);
+      // console.log(payload);
         const {userId} = payload;
         const user = await User.findById(userId);//le decimos a mongoose que busque ese userId en la coleccion de User en mongoDB
         req.user = user;

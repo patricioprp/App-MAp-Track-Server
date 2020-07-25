@@ -14,6 +14,7 @@ const userSchema = new mongoose.Schema({
 });
 
 userSchema.pre('save',function(next){
+    const user = this;
     //VAlidar si la contraseña fue modificada
     if(!user.isModified('password')){
      return next();//no hacemos nada y continuamos
@@ -37,8 +38,10 @@ userSchema.pre('save',function(next){
 //agregamos un metodo a nuestro schema de usuario
 //usamos function en lugar de funcion flecha porque, porque la funcion flecha usa estos valores en el contexto donde luego es usada
 //pero la funcion anonima lo usara en este contexto, de esste archivo
-userSchema.methods.comparePassword() = function(candidatePassword){
-   return new Promise((resolve,reject)=>{
+userSchema.methods.comparePassword = function(
+    candidatePassword
+    ){
+   return new Promise((resolve,reject) => {
       //resolve===Resolver si esta todo ok  reject===Rechazar
       //usamos una promesa porque es una actividad asincrona comparar las contraseñas
       const user = this;
