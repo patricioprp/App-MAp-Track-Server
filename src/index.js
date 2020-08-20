@@ -21,7 +21,10 @@ app.use(authRoutes);
 
 app.use(trackRoutes);
 
-const mongoURI = 'mongodb+srv://admin:admin@cluster0.9gb3l.mongodb.net/<dbname>?retryWrites=true&w=majority'
+//const mongoURI = 'mongodb+srv://admin:admin@cluster0.9gb3l.mongodb.net/<dbname>?retryWrites=true&w=majority'
+//se devio cambiar el link por la version de node, la de la linea de arriba es una version 3.6 o superior
+//la de abajo es una version 2.2.12 o superior, el problema de las versiones lo tiene mongoose
+const mongoURI = 'mongodb://admin:admin@cluster0-shard-00-00.9gb3l.mongodb.net:27017,cluster0-shard-00-01.9gb3l.mongodb.net:27017,cluster0-shard-00-02.9gb3l.mongodb.net:27017/<dbname>?ssl=true&replicaSet=atlas-9uznoh-shard-0&authSource=admin&retryWrites=true&w=majority';
 
 mongoose.connect(mongoURI,{
 
@@ -42,6 +45,6 @@ app.get('/',requireAuth,(req,res) => {
 });
 
 //Definimos el puerto por el cual se escuchara la app
-app.listen(3000, () => { 
-    console.log('Estamos escuchando en el puerto 3000');
+app.listen(3001, () => { 
+    console.log('Estamos escuchando en el puerto 3001');
 });
